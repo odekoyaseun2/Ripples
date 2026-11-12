@@ -21,6 +21,13 @@ const academyPrograms = [
   { title: 'Hospitality Operations', level: 'Advanced', duration: '8 weeks', mentor: 'Musa D' },
 ];
 
+const serviceHighlights = [
+  { icon: '🍽️', title: 'Restaurant & Delivery', text: 'Fast online ordering, smart delivery routing, and secure checkout.' },
+  { icon: '🎉', title: 'Catering & Events', text: 'Design and manage memorable events with complete planning support.' },
+  { icon: '🎓', title: 'Academy Portal', text: 'Enroll students, track courses, and build hospitality careers.' },
+  { icon: '📊', title: 'Admin OPS', text: 'Manage demand, revenue, and operations with one control center.' },
+];
+
 const progressSteps = [
   'Order placed and confirmed',
   'Kitchen prep & quality check',
@@ -79,7 +86,6 @@ function App() {
 
   const sendMessage = () => {
     if (!chatInput.trim()) return;
-
     const message = chatInput.trim();
     const lowered = message.toLowerCase();
 
@@ -189,6 +195,25 @@ function App() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section highlight-section">
+          <div className="container">
+            <div className="section-heading center">
+              <p className="eyebrow">Everything under one roof</p>
+              <h3>Modern services built for a busy lifestyle</h3>
+            </div>
+
+            <div className="feature-grid">
+              {serviceHighlights.map((item) => (
+                <div key={item.title} className="feature-card">
+                  <div className="feature-icon">{item.icon}</div>
+                  <h4>{item.title}</h4>
+                  <p>{item.text}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
