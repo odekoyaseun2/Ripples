@@ -116,6 +116,7 @@ function App() {
         <nav className="main-nav" aria-label="Main navigation">
           <a href="#home">Home</a>
           <a href="#restaurant">Restaurant</a>
+          <a href="#events">Events</a>
           <a href="#academy">Academy</a>
           <a href="#tracking">Tracking</a>
           <a href="#admin">Admin</a>
@@ -127,6 +128,12 @@ function App() {
       <main id="home">
         <section className="hero container">
           <div className="hero-copy">
+            <div className="hero-pills">
+              <span>Food Delivery</span>
+              <span>Event Planning</span>
+              <span>Student Academy</span>
+            </div>
+
             <p className="eyebrow">One ecosystem. Endless experiences.</p>
             <h1 className="hero-title">Ripples</h1>
             <h2 className="hero-subtitle">Catering &amp; Events</h2>
@@ -246,7 +253,7 @@ function App() {
           </div>
         </section>
 
-        <section className="section alt-bg">
+        <section className="section alt-bg" id="events">
           <div className="container">
             <div className="section-heading left">
               <p className="eyebrow">Events &amp; Catering</p>
