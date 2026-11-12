@@ -81,17 +81,20 @@ function App() {
     if (!chatInput.trim()) return;
 
     const message = chatInput.trim();
+    const lowered = message.toLowerCase();
 
     setChatMessages((current) => [
       ...current,
       { from: 'user', text: message },
       {
         from: 'bot',
-        text: message.toLowerCase().includes('event')
+        text: lowered.includes('event')
           ? 'I can help you plan a tailored event package. Share guest size, date, and whether you need catering, décor, or venue coordination.'
-          : message.toLowerCase().includes('order')
+          : lowered.includes('order') || lowered.includes('food')
             ? 'Your food order is ready for checkout. Add items to cart and confirm your delivery or pickup method.'
-            : 'I can assist with food orders, academy enrollment, delivery tracking, or event planning. Tell me what you need today.',
+            : lowered.includes('student') || lowered.includes('academy')
+              ? 'Our academy offers culinary, event planning, and hospitality programs. I can help you enroll or check the best beginner path.'
+              : 'I can assist with food orders, academy enrollment, delivery tracking, or event planning. Tell me what you need today.',
       },
     ]);
     setChatInput('');
@@ -102,15 +105,15 @@ function App() {
   return (
     <div className="page-shell">
       <header className="topbar container">
-        <div className="brand-wrap">
+        <div className="brand-wrap" aria-label="Ripples brand">
           <div className="brand-mark">R</div>
           <div>
             <div className="brand-word">Ripples</div>
-            <div className="brand-tag">Catering & Events</div>
+            <div className="brand-tag">Catering &amp; Events</div>
           </div>
         </div>
 
-        <nav className="main-nav">
+        <nav className="main-nav" aria-label="Main navigation">
           <a href="#home">Home</a>
           <a href="#restaurant">Restaurant</a>
           <a href="#academy">Academy</a>
@@ -118,7 +121,7 @@ function App() {
           <a href="#admin">Admin</a>
         </nav>
 
-        <button className="primary-btn small">Login / Sign Up</button>
+        <button className="primary-btn small" type="button">Login / Sign Up</button>
       </header>
 
       <main id="home">
@@ -126,15 +129,15 @@ function App() {
           <div className="hero-copy">
             <p className="eyebrow">One ecosystem. Endless experiences.</p>
             <h1 className="hero-title">Ripples</h1>
-            <h2 className="hero-subtitle">Catering & Events</h2>
+            <h2 className="hero-subtitle">Catering &amp; Events</h2>
             <p className="hero-text">
               Built for memorable meals, vibrant events, student development, seamless delivery,
               secure payments, and real-time tracking across one beautifully connected platform.
             </p>
 
             <div className="hero-actions">
-              <button className="primary-btn">Book a Service</button>
-              <button className="ghost-btn">Explore Menu</button>
+              <button className="primary-btn" type="button">Book a Service</button>
+              <button className="ghost-btn" type="button">Explore Menu</button>
             </div>
 
             <div className="hero-stats">
@@ -156,9 +159,10 @@ function App() {
           <div className="hero-panel">
             <div className="glass-card service-card">
               <div className="card-topline">
-                <span className="pulse-dot" />
+                <span className="pulse-dot" aria-hidden="true" />
                 Live service dashboard
               </div>
+
               <div className="mini-metrics">
                 <div>
                   <span>Deliveries</span>
@@ -169,7 +173,8 @@ function App() {
                   <strong>09</strong>
                 </div>
               </div>
-              <div className="timeline">
+
+              <div className="timeline" aria-label="service progress timeline">
                 {progressSteps.map((step, index) => (
                   <div key={step} className={`timeline-item ${index === 0 ? 'active' : ''}`}>
                     <span>{index + 1}</span>
@@ -183,7 +188,7 @@ function App() {
 
         <section className="section container" id="restaurant">
           <div className="section-heading">
-            <p className="eyebrow">Menu & Delivery</p>
+            <p className="eyebrow">Menu &amp; Delivery</p>
             <h3>Restaurant and delivery system</h3>
           </div>
 
@@ -199,7 +204,7 @@ function App() {
                   </div>
                   <div className="menu-footer">
                     <strong>₦{item.price.toLocaleString()}</strong>
-                    <button onClick={() => addToCart(item)}>Add to cart</button>
+                    <button type="button" onClick={() => addToCart(item)}>Add to cart</button>
                   </div>
                 </article>
               ))}
@@ -223,7 +228,7 @@ function App() {
                           {item.quantity} x ₦{item.price.toLocaleString()}
                         </small>
                       </div>
-                      <button onClick={() => removeFromCart(item.id)}>Remove</button>
+                      <button type="button" onClick={() => removeFromCart(item.id)}>Remove</button>
                     </div>
                   ))}
                 </div>
@@ -236,7 +241,7 @@ function App() {
                 <div className="grand-total"><span>Total</span><strong>₦{total.toLocaleString()}</strong></div>
               </div>
 
-              <button className="primary-btn full-width">Proceed to checkout</button>
+              <button className="primary-btn full-width" type="button">Proceed to checkout</button>
             </aside>
           </div>
         </section>
@@ -244,18 +249,18 @@ function App() {
         <section className="section alt-bg">
           <div className="container">
             <div className="section-heading left">
-              <p className="eyebrow">Events & Catering</p>
+              <p className="eyebrow">Events &amp; Catering</p>
               <h3>Tailored experiences for every celebration</h3>
             </div>
 
             <div className="event-grid">
               {eventPackages.map((event) => (
                 <div key={event.title} className="event-card">
-                  <div className="event-icon">✦</div>
+                  <div className="event-icon" aria-hidden="true">✦</div>
                   <h4>{event.title}</h4>
                   <p>{event.details}</p>
                   <strong>{event.price}</strong>
-                  <button className="ghost-btn full-width">Customize package</button>
+                  <button className="ghost-btn full-width" type="button">Customize package</button>
                 </div>
               ))}
             </div>
@@ -264,7 +269,7 @@ function App() {
 
         <section className="section container" id="academy">
           <div className="section-heading">
-            <p className="eyebrow">Academy & Student Portal</p>
+            <p className="eyebrow">Academy &amp; Student Portal</p>
             <h3>Learn hospitality, event management, and business skills</h3>
           </div>
 
@@ -277,7 +282,7 @@ function App() {
                   <span>{program.duration}</span>
                   <span>{program.mentor}</span>
                 </div>
-                <button className="primary-btn small full-width">Enroll now</button>
+                <button className="primary-btn small full-width" type="button">Enroll now</button>
               </div>
             ))}
           </div>
@@ -324,8 +329,9 @@ function App() {
                   onChange={(e) => setChatInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
                   placeholder="Ask Ripples AI..."
+                  aria-label="Ask Ripples AI"
                 />
-                <button onClick={sendMessage}>Send</button>
+                <button type="button" onClick={sendMessage}>Send</button>
               </div>
             </div>
           </div>
@@ -335,7 +341,7 @@ function App() {
           <div className="container tracking-layout">
             <div>
               <div className="section-heading left">
-                <p className="eyebrow">Verification & tracking</p>
+                <p className="eyebrow">Verification &amp; tracking</p>
                 <h3>Track your order, event progress, or delivery</h3>
               </div>
 
@@ -344,7 +350,7 @@ function App() {
                   <span>Order ID</span>
                   <strong>#RPL-1848</strong>
                 </div>
-                <div className="tracking-bar">
+                <div className="tracking-bar" aria-label="tracking progress">
                   <div className="tracking-fill" style={{ width: '76%' }} />
                 </div>
                 <div className="tracking-status-row">
@@ -356,29 +362,10 @@ function App() {
             </div>
 
             <div className="qr-box">
-              <div className="qr-code">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+              <div className="qr-code" aria-label="QR code verifier">
+                {Array.from({ length: 23 }).map((_, idx) => (
+                  <span key={idx} aria-hidden="true" />
+                ))}
               </div>
               <div className="qr-meta">
                 <strong>QR Delivery Verifier</strong>
@@ -398,12 +385,14 @@ function App() {
             <div className="payment-card">
               <div className="payment-options">
                 <button
+                  type="button"
                   className={selectedPayment === 'transfer' ? 'selected' : ''}
                   onClick={() => setSelectedPayment('transfer')}
                 >
                   Bank Transfer
                 </button>
                 <button
+                  type="button"
                   className={selectedPayment === 'cash' ? 'selected' : ''}
                   onClick={() => setSelectedPayment('cash')}
                 >
@@ -440,7 +429,7 @@ function App() {
                 <li>Identity checked with NIN</li>
                 <li>Encrypted transaction tracking</li>
               </ul>
-              <button className="primary-btn full-width">Confirm payment</button>
+              <button className="primary-btn full-width" type="button">Confirm payment</button>
             </div>
           </div>
         </section>
@@ -475,7 +464,7 @@ function App() {
                 <tbody>
                   <tr>
                     <td>Wedding package</td>
-                    <td>Faith & Ben</td>
+                    <td>Faith &amp; Ben</td>
                     <td><span className="status-pill green">Confirmed</span></td>
                     <td>₦390,000</td>
                   </tr>
