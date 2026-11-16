@@ -1,4 +1,5 @@
-import { initializeApp, getApps } from 'firebase/app';
+import { getApps, initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
@@ -17,6 +18,11 @@ export const isFirebaseConfigured = Boolean(
     firebaseConfig.appId
 );
 
-export const firebaseApp = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+export const firebaseApp = isFirebaseConfigured
+  ? getApps()[0] || initializeApp(firebaseConfig)
+  : null;
+
+// Keep the app usable as a front-end demo until Firebase credentials are configured.
+export const auth = firebaseApp ? getAuth(firebaseApp) : null;
 
 export default firebaseApp;
